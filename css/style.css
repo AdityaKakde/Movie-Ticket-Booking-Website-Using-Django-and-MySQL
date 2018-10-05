@@ -197,6 +197,40 @@ body {
   margin-bottom: 20px;
 }
 
+.paymentbox{
+  width: 1000px;
+  height: 1000px;
+  background: #000;
+  color: #fff;
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%,-50%);
+  box-sizing: border-box;
+  padding: 170px 35px;
+
+}
+.paymentbox p{
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
+}
+
+.paymentbox input{
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.paymentbox input[type="text"], input[type="password"]{
+  border: none;
+  border-bottom: 1px solid #fff;
+  background: transparent;
+  outline: none;
+  height: 40px;
+}
+
+
+
 
 
 
