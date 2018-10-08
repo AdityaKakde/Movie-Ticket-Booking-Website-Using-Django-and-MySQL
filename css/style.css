@@ -73,6 +73,15 @@ body {
   border-radius: 20px;
 }
 
+.button1{
+  width: 105px;
+  height: 50px;
+  vertical-align: bottom;
+  background-color: #dd0a37;
+  border: none;
+  border-radius: 20px;
+}
+
 .createaccount{
   width: 500px;
   height: 1000px;
@@ -117,7 +126,7 @@ body {
   position: absolute;
   transform: translate(-50%,-50%);
   box-sizing: border-box;
-  padding: 250px 35px;
+  padding: 300px 35px;
 }
 
 .eventbox p{
