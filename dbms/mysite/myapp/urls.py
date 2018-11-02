@@ -1,12 +1,16 @@
-from django.contrib import admin
-from django.urls import path
+#from django.contrib import admin
+from django.conf.urls import re_path
 from . import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('home/', views.index),
-    path('adminLobby/', views.adminLobby),
-    path('adminLogin/', views.adminLogin),
-    path('createEvent/', views.createEvent),
-    path('createAccount/', views.createAccount),
+    #url(r'^admin/', admin.site.urls),
+    re_path(r'^$', views.index),
+    re_path(r'index/$', views.index),
+    re_path(r'adminLobby/$', views.adminLobby),
+    re_path(r'adminLogin/$', views.adminLogin),
+    re_path(r'createEvent/$', views.createEvent),
+    re_path(r'createAccount/$', views.createAccount),
+    re_path(r'login/$', views.login),
+    re_path(r'managerLogin/$', views.managerLogin),
+    #re_path(r'managerLogin|/createAccount|/createEvent|/adminLogin|/createEvent/index/$', views.index),
 ]

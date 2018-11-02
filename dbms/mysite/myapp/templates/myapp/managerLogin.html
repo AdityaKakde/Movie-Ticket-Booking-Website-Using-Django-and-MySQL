@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 {%load staticfiles%}
 <html lang="en">
 <head>
@@ -6,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-    <title>ADMIN LOGIN</title>
+    <title>Title goes here</title>
 
     <!-- Google font -->
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,700,900" rel="stylesheet">
@@ -23,6 +24,7 @@
 
     <!-- Custom stlylesheet -->
     <link type="text/css" rel="stylesheet" href="{% static 'myapp/css/style.css'%}" />
+
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -43,8 +45,8 @@
                 <!-- Logo -->
                 <div class="navbar-brand">
                     <a class="logo" href="index.html">
-                        <img class="logo-img" src="{% static 'myapp/img/logo.png'%}" alt="logo">
-                        <img class="logo-alt-img" src="{% static 'myapp/img/logo-alt.png'%}" alt="logo">
+                        <img class="logo-img" src="./img/logo.png" alt="logo">
+                        <img class="logo-alt-img" src="./img/logo-alt.png" alt="logo">
                     </a>
                 </div>
                 <!-- /Logo -->
@@ -70,16 +72,16 @@
     </header>
     <!-- /Header -->
 
-    <!-- /ADMIN LOGIN -->
+    <!-- /MANAGER LOGIN -->
     <div class="loginbox">
         <img src="avatar.png" class="avatar">
-        <h2 style="color:#dd0a37">ADMIN LOGIN</h2>
-        <form action="adminlobby.html">
+        <h2 style="color:#dd0a37">MANAGER LOGIN</h2>
+        <form>
             <p>USERNAME</p>
-            <input type="text" name="adminUsername" placeholder="Username">
+            <input type="text" name="managerUsername" placeholder="Username" required>
             <p>PASSWORD</p>
-            <input type="password" name="adminPassword" placeholder="password">
-            <input type="submit" name="" value="LOGIN" class="button">
+            <input type="password" name="managerPassword" placeholder="password">
+            <input type="submit" name="" value="Login" class="button">
 
 
         </form>

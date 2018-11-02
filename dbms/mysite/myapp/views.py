@@ -15,3 +15,9 @@ def adminLobby(request):
 
 def createAccount(request):
     return render(request,'myapp/createAccount.html')
+
+def login(request):
+    return render(request,'myapp/login.html')
+
+def managerLogin(request):
+    return render(request,'myapp/managerLogin.html')
