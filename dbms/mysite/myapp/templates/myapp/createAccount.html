@@ -60,7 +60,7 @@
             <!-- Navigation -->
             <nav id="nav">
                 <ul class="main-nav nav navbar-nav navbar-right">
-                    <li><a href="/">Home</a></li><!-- <li><a href="index">Home</a></li> -->
+                    <li><a href="index.html#home">Home</a></li>
                 </ul>
             </nav>
             <!-- /Navigation -->
@@ -72,27 +72,28 @@
 
     <!-- /LOGIN -->
     <div class="createaccount">
-        <img src="{%static 'myapp/img/avatar.png'%}" class="avatar">
-        <h2 style="color:#dd0a37">SIGN UP</h2>
-        <form>
-            <p>FIRST NAME</p>
-            <input type="text" name="" placeholder="FIRST NAME" required>
-            <p>LAST NAME</p>
-            <input type="text" name="" placeholder="LAST NAME" required>
-            <p>USERNAME</p>
-            <input type="text" name="" placeholder="Username" required>
-            <p>PASSWORD</p>
-            <input type="password" name="" placeholder="password">
-            <p>RE-ENTER PASSWORD</p>
-            <input type="password" name="" placeholder="password">
-            <p>EMAIL-ID</p>
-            <input type="email" name="" placeholder="abc@email.com" required>
-            <p>CONTACT</p>
-            <input type="text" name="" required>
-            <input type="submit" name="" value="SUBMIT" class="button">
+    <img src="{%static 'myapp/img/avatar.png'%}" class="avatar">
+    <h2 style="color:#dd0a37">SIGN UP</h2>
+    <form class="" action="login/" method="post">
+        {% csrf_token %}
+        <p>FIRST NAME</p>
+        <input type="text" name="" placeholder="FIRST NAME" required>
+        <p>LAST NAME</p>
+        <input type="text" name="" placeholder="LAST NAME" required>
+        <p>USERNAME</p>
+        <input type="text" name="" placeholder="Username" required>
+        <p>PASSWORD</p>
+        <input type="password" name="" placeholder="password">
+        <p>RE-ENTER PASSWORD</p>
+        <input type="password" name="" placeholder="password">
+        <p>EMAIL-ID</p>
+        <input type="email" name="" placeholder="abc@email.com" required>
+        <p>CONTACT</p>
+        <input type="text" pattern="[789][0-9]{9}" name="" required>
+        <input type="submit" name="" value="SUBMIT" class="button">
 
 
-        </form>
+    </form>
 
     </div>
 
