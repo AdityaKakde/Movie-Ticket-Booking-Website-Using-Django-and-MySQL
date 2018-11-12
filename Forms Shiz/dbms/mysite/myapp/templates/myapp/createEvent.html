@@ -76,21 +76,10 @@
 
         <img src="{% static 'myapp/img/avatar.png'%}" class="avatar">
         <h2 style="color:#dd0a37">CREATE EVENT</h2>
-         <form>
-            <p>NAME</p>
-            <input type="text" name="" placeholder="Concert/Movie/yada-yada-yo" required>
-            <p>DATE</p>
-            <input type="text" name="" placeholder="09/11/2001" required>
-            <p>TIME</p>
-
-            <input type="text" name="" placeholder="00:00:00" required>
-            <p>VENUE</p>
-            <input type="text" name="" placeholder="Venue" required>
-
-            <p>SEATS</p>
-            <input type="text" name="" required>
-            <input type="submit" name="" value="ADD EVENT" class="button">
-
+        <form class="" action="" method="post">
+           {% csrf_token %}
+           {{ form }}
+           <input type="submit" name="" value="SUBMIT" class="button">
 
         </form>
 

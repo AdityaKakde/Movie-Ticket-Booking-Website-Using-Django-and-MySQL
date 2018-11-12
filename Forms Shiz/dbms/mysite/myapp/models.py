@@ -32,7 +32,7 @@ class Customer(models.Model):
     cus_contact = models.CharField(max_length=20, blank=True, null=True)
     username = models.CharField(max_length=10, blank=True, null=True)
     password = models.CharField(max_length=10, blank=True, null=True)
-    
+
 
     def __str__(self):
         return self.cus_name
@@ -48,6 +48,9 @@ class Event(models.Model):
     event_name = models.CharField(max_length=10, blank=True, null=True)
     event_time = models.CharField(max_length=10, blank=True, null=True)
     date = models.DateField(blank=True, null=True)
+
+    def __str__(self):
+        return self.event_name
 
     class Meta:
         managed = False

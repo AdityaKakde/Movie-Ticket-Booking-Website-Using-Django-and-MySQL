@@ -8,7 +8,7 @@ urlpatterns = [
     re_path(r'index/$', views.index),
     re_path(r'adminLobby/$', views.adminLobby),
     re_path(r'adminLogin/$', views.adminLogin),
-    re_path(r'createEvent/$', views.createEvent),
+    re_path(r'createEvent/$', views.event_view),
     re_path(r'createAccount/$', views.createAccount),
     #re_path(r'login/$', views.login),
     re_path(r'managerLogin/$', views.managerLogin),

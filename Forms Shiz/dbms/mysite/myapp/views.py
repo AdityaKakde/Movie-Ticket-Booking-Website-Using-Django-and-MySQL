@@ -43,8 +43,8 @@ def signup_view(request):
     if request.method =='POST':
         form = signupform(request.POST)
         if form.is_valid():
-            username=form.save()
-            login(request,username)
+            form.save()
+            # login(request,username)
         context = {
             'form':form
         }
@@ -76,3 +76,22 @@ def login_view(request):
                 'form':form
             }
         return render (request,"myapp/login.html",context)
+
+def event_view(request):
+    if request.method =='POST':
+        form = eventform(request.POST)
+        if form.is_valid():
+            form.save()
+
+        context = {
+            'form':form
+        }
+        print ("Hello")
+        return render (request,"myapp/createEvent.html",context)
+
+    else:
+        form = eventform(request.POST)
+        context = {
+                'form':form
+            }
+        return render (request,"myapp/createEvent.html",context)
