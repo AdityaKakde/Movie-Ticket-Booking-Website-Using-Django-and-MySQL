@@ -1,4 +1,5 @@
 {% load staticfiles %}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -43,8 +44,8 @@
                 <!-- Logo -->
                 <div class="navbar-brand">
                     <a class="logo" href="index.html">
-                        <img class="logo-img" src="{% static 'myapp/img/logo.png'%}" alt="logo">
-                        <img class="logo-alt-img" src="{% static 'myapp/img/logo-alt.png'%}" alt="logo">
+                        <img class="logo-img" src="./img/logo.png" alt="logo">
+                        <img class="logo-alt-img" src="./img/logo-alt.png" alt="logo">
                     </a>
                 </div>
                 <!-- /Logo -->
@@ -70,30 +71,18 @@
     </header>
     <!-- /Header -->
 
-    <!-- /LOGIN -->
-    <div class="createaccount">
-    <img src="{%static 'myapp/img/avatar.png'%}" class="avatar">
-    <h2 style="color:#dd0a37">SIGN UP</h2>
-    <form class="" action="" method="post">
-        {% csrf_token %}
-        {{ form }}
-        <input type="submit" name="eventScreen.html" value="SUBMIT" class="button">
-    </form>
-        <!-- <p>NAME</p>
-        <input type="text" name="cus_name" placeholder="John Doe" required>
-
-        <p>USERNAME</p>
-        <input type="text" name="username" placeholder="Username" required>
-        <p>PASSWORD</p>
-        <input type="password" name="password" placeholder="password">
-        <p>RE-ENTER PASSWORD</p>
-        <input type="password" name="" placeholder="password">
-        <p>CONTACT</p>
-        <input type="text" pattern="[789][0-9]{9}" name="cus_contact" required> -->
+    <!-- /EVENT SCREEN -->
+    <div class="eventbox">
+        <img src="avatar.png" class="avatar">
+        <h2 style="color:#dd0a37">CURRENTLY SHOWING</h2>
+        <form action="paymentLobby.html">
+            <p>MOVIE 1</p>
+            <input type="submit" name="bookingConfirm1" value="Book" class="button">
+            <p>MOVIE 1</p>
+            <input type="submit" name="bookingConfirm" value="Book" class="button">
 
 
-
-
+        </form>
 
     </div>
 
@@ -107,7 +96,6 @@
             </div>
         </div>
     </div>
-
 
 
 

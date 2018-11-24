@@ -75,13 +75,17 @@
     <div class="loginbox">
         <img src="avatar.png" class="avatar">
         <h2 style="color:#dd0a37">LOGIN</h2>
-        <form action="eventScreen.html">
-            <p>USERNAME</p>
+      <form  method="post">
+          <!-- eventScreen.html      -->
+              {% csrf_token %}
+              {{ form }}
+            <!-- <p>USERNAME</p>
             <input type="text" name="" placeholder="Username" required>
             <p>PASSWORD</p>
-            <input type="password" name="" placeholder="password">
+            <input type="password" name="" placeholder="password"> -->
             <input type="submit" name="" value="Login" class="button">
-            <a href="createAccount">Create Account</a><br>
+            <a href="signup">Create Account</a><br>
+            <!-- <a href=sample>createaccount</a><br> -->
             <a href="adminLogin">Login as Admin</a><br>
             <a href="managerLogin">Login as Manager</a><br>
         </form>
