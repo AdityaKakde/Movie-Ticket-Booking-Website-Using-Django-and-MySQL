@@ -39,6 +39,9 @@ def login(request):
 def managerLogin(request):
     return render(request,'myapp/managerLogin.html')
 
+def paymentLobby(request):
+    return render(request,'myapp/paymentLobby.html')
+
 # def signup(request):
 #     print("Form is submitted")
 #     #cus_id = request.POST["username"]
