@@ -76,12 +76,13 @@
     <div class="loginbox">
         <img src="avatar.png" class="avatar">
         <h2 style="color:#dd0a37">MANAGER LOGIN</h2>
-        <form>
-            <p>USERNAME</p>
-            <input type="text" name="managerUsername" placeholder="Username" required>
-            <p>PASSWORD</p>
-            <input type="password" name="managerPassword" placeholder="password">
-            <input type="submit" name="" value="Login" class="button">
+        <form  method="post">
+
+
+          {% csrf_token %}
+          {{form}}
+
+            <input type="submit" name="" value="LOGIN" class="button">
 
 
         </form>

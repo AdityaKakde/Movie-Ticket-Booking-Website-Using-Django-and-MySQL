@@ -1,22 +1,27 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth import (authenticate,get_user_model,logout)
 from django.contrib.auth import login as log
+from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from .models import *
 from .forms import *
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 
-customer = get_user_model
+User = get_user_model()
 # Create your views here.
 def index(request):
     return render(request,'myapp/index.html')
 
 def createEvent(request):
     return render(request,'myapp/createEvent.html')
-
+@login_required
 def eventScreen(request):
-    return render(request,'myapp/eventScreen.html')
+    event = Event.objects.all()
+    for e in event:
+        print(e.event_name)
+    count=1
+    return render(request,'myapp/eventScreen.html',{'event':event},{'count':count})
 
 def adminLogin(request):
     return render(request,'myapp/adminLogin.html')
@@ -45,7 +50,27 @@ def managerLogin(request):
 #     customer.save()
 #     print("Helllloooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo")
 #     return render(request,'myapp/createAccount.html')
-
+#
+# def signup_view(request):
+#     # form is working but errors are not seen.
+#     if request.method =='POST':
+#         form = signupform(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             # login(request,username)
+#         form = signupform()
+#         context = {
+#             'form':form
+#         }
+#
+#         return render (request,"myapp/createAccount.html",context)
+#
+#     else:
+#         form = signupform()
+#         context = {
+#                 'form':form
+#             }
+#         return render (request,"myapp/createAccount.html",context)
 def signup_view(request):
     if request.method =='POST':
         form = signupform(request.POST)
@@ -64,8 +89,7 @@ def signup_view(request):
         context = {
                 'form':form
             }
-        return render (request,"myapp/createAccount.html",context)
-
+    return render (request,"myapp/createAccount.html",context)
 def login_view(request):
         if request.method =='POST':
             print('view 1')
@@ -79,7 +103,7 @@ def login_view(request):
                 if user:
                     print(user)
                     log(request,user)
-                    print(request.user.is_authenticated())
+                    # print(request.user.is_authenticated())
 
             context = {
                     'form':form
@@ -91,32 +115,45 @@ def login_view(request):
                     'form':form
                 }
             return render (request,"myapp/login.html",context)
+def managerLogin_view(request):
+    next = request.GET.get('next')
+    form = UserLoginForm(request.POST or None)
+    if form.is_valid():
+        username=form.cleaned_data.get('username')
+        password=form.cleaned_data.get('password')
+        user=authenticate(username=username,password=password)
+        log(request,user)
+        if next:
+            return redirect(next)
+        return redirect('/')
+    context = {
+        'form':form
+    }
+    return render (request,"myapp/managerLogin.html",context)
 
+def managerRegister_view(request):
+    next = request.GET.get('next')
+    form = ManagerRegistrationForm(request.POST or None)
+    if form.is_valid():
+        user = form.save(commit=False)
+        password = form.cleaned_data.get('password')
+        user.set_password(password)
+        user.save()
+        new_user = authenticate(username=user.username, password=password)
+        log(request,new_user)
+        if next:
+            return redirect(next)
+        return redirect('/')
+    context = {
+        'form':form
+    }
+    return render (request,"myapp/managerRegister.html",context)
 
+def logout_view(request):
+    logout(request)
+    return redirect ('/')
 
-
-
-# def login_view(request):
-#     if request.method =='POST':
-#         user = request.POST['username']
-#         pas = request.POST['password']
-#         try:
-#             user = auth.authenticate(username=username,password=password)
-#             if user is not None:
-#                 auth.login(request,user)
-#                 return render (request,eventScreen)
-#
-#
-#             return render (request,"myapp/createAccount.html",context)
-#
-#     else:
-#         form = AuthenticationForm()
-#         context = {
-#                 'form':form
-#             }
-#         return render (request,"myapp/login.html",context)
-
-def event_view(request):
+def create_event_view(request):
     if request.method =='POST':
         form = eventform(request.POST)
         if form.is_valid():
@@ -129,8 +166,27 @@ def event_view(request):
         return render (request,"myapp/createEvent.html",context)
 
     else:
-        form = eventform(request.POST)
+        form = eventform()
         context = {
                 'form':form
             }
         return render (request,"myapp/createEvent.html",context)
+
+# def event_view(request):
+#     if request.method =='POST':
+#         form = eventform(request.POST)
+#         if form.is_valid():
+#             form.save()
+#
+#         context = {
+#             'form':form
+#         }
+#         print ("Hello")
+#         return render (request,"myapp/createEvent.html",context)
+#
+#     else:
+#         form = eventform(request.POST)
+#         context = {
+#                 'form':form
+#             }
+#         return render (request,"myapp/createEvent.html",context)

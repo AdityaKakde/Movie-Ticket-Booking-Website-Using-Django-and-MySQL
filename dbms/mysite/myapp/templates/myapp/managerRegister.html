@@ -1,5 +1,4 @@
-{% load staticfiles %}
-<!DOCTYPE html>
+{%load staticfiles%}
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -7,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-    <title>CREATE ACCOUNT</title>
+    <title>ADMIN LOGIN</title>
 
     <!-- Google font -->
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,700,900" rel="stylesheet">
@@ -44,8 +43,8 @@
                 <!-- Logo -->
                 <div class="navbar-brand">
                     <a class="logo" href="index.html">
-                        <img class="logo-img" src="./img/logo.png" alt="logo">
-                        <img class="logo-alt-img" src="./img/logo-alt.png" alt="logo">
+                        <img class="logo-img" src="{% static 'myapp/img/logo.png'%}" alt="logo">
+                        <img class="logo-alt-img" src="{% static 'myapp/img/logo-alt.png'%}" alt="logo">
                     </a>
                 </div>
                 <!-- /Logo -->
@@ -71,24 +70,17 @@
     </header>
     <!-- /Header -->
 
-    <!-- /EVENT SCREEN -->
-    <div class="eventbox">
+    <!-- /ADMIN LOGIN -->
+    <div class="createaccount">
         <img src="avatar.png" class="avatar">
-        <h2 style="color:#dd0a37">CURRENTLY SHOWING</h2>
-        <form action="paymentLobby.html">
+        <h2 style="color:#dd0a37">MANAGER SIGNUP</h2>
+      <form class="" method="post">
 
-        <!-- { %csrf_token% } -->
-        {% for events in event %}
+      </form>
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" name="" value="SUBMIT" class="button">
 
-        <p> </p>
-        <input type="submit" name="{{events.event_name}}" value="{{events.event_name}}" class="button">
-
-        {% endfor %}
-            <!-- <p>MOVIE 1</p>
-            <input type="submit" name="bookingConfirm1" value="Book" class="button">
-            <p>MOVIE 1</p>
-            <input type="submit" name="bookingConfirm" value="Book" class="button">
- -->
 
         </form>
 
