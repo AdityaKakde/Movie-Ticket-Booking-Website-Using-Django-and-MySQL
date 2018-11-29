@@ -1,9 +1,15 @@
 from django.forms import ModelForm
 from django import forms
-from django.contrib.auth import (authenticate,get_user_model,logout)
 from django.contrib.auth.models import User
+from django.contrib.auth import (
+    authenticate,
+    get_user_model,
+    )
+# from django.contrib.auth.models import User
 from .models import *
 from django.contrib.auth import login as log
+
+User = get_user_model()
 
 class signupform(ModelForm):
     password2 = forms.CharField(widget=forms.PasswordInput,label='CONFIRM PASSWORD')
@@ -56,20 +62,57 @@ class signupform(ModelForm):
         if password!=password2:
             raise forms.ValidationError("Passwords don't match")
         return password2
-        # return redirect(signupform)
+# return redirect(signupform)
 
 
-    # def clean(self,*args,**kwargs):
-    #     print(self.cleaned_data)
-    #     username= self.cleaned_data.get('password')
-    #     user_qs = Customer.objects.filter(username=username)
-    #     if user_qs.exists():
-    #         raise forms.ValidationError("User already exists")
-    #     password= self.cleaned_data.get('password')
-    #     password2= self.cleaned_data.get('password2')
-    #     if password!=password2:
-    #         raise forms.ValidationError("Passwords don't match")
-    #     return super(signupform,request).clean(*args,**kwargs)
+class UserLoginForm(forms.Form):
+        username = forms.CharField(label='USERNAME')
+        password = forms.CharField(widget=forms.PasswordInput,label='PASSWORD')
+
+        def clean(self):
+            username= self.cleaned_data.get('username')
+            password= self.cleaned_data.get('password')
+
+            if username and password:
+                user = authenticate(username=username, password=password)
+                if not user:
+                     print('Form Not user')
+                     raise forms.ValidationError("User nonexistent")
+                if not user.check_password(password):
+                     print('Form pw incorrect')
+                     raise forms.ValidationError("Incorrect password")
+                # if not user.is_active(password):
+                #     raise forms.ValidationError("Inactive User")
+            return super(UserLoginForm, self).clean()
+
+class ManagerRegistrationForm(ModelForm):
+        username =  forms.CharField(label='USERNAME')
+        email = forms.EmailField(label='EMAIL')
+        email2 = forms.EmailField(label='CONFIRM EMAIL')
+        password =  forms.CharField(widget=forms.PasswordInput,label='PASSWORD')
+
+        class Meta:
+            model = User
+            fields = {
+                'username',
+                'password',
+                'email2',
+                'email',
+
+                }
+
+        def clean_email2(self):
+            email= self.cleaned_data.get('email')
+            email2= self.cleaned_data.get('email2')
+            password= self.cleaned_data.get('password')
+            if email!=email2:
+                raise forms.ValidationError("Emails must match")
+            email_qs = User.objects.filter(username=username)
+            if email_qs.exists():
+                raise forms.ValidationError("Email already registred")
+
+
+            return super(ManagerRegistrationForm,self).clean(*args,**kwargs)
 
 class loginform(forms.Form):
         username = forms.CharField(label='USERNAME')
@@ -79,7 +122,7 @@ class loginform(forms.Form):
         def clean(self):
             username= self.cleaned_data.get('username')
             password= self.cleaned_data.get('password')
-            userz=User.objects.all()
+            userz=Customer.objects.all()
             print(userz)
             print('f1')
             user= authenticate(username=username,password=password)
@@ -109,3 +152,22 @@ class eventform(ModelForm):
     class Meta:
         model = Event
         fields = [ 'event_name','event_time','date']
+        labels ={
+            'event_name': ('EVENT NAME'),
+            'event_time': ('EVENT TIME'),
+            'date': ('DATE'),
+        }
+        widgets = {
+            'event_time':forms.TimeInput(attrs={'placeholder':""}),
+            'event_name':forms.TextInput(attrs={'placeholder':""}),
+
+        }
+
+        def clean():
+            event_name = form.cleaned_data.get(event_name)
+            event_time = form.cleaned_data.get(event_time)
+            date = form.cleaned_data.get(date)
+
+            name_qs=Event.objects.filter(event_name=event_name)
+            if name_qs.exists():
+                raise forms.ValidationError('Enter valid name')
