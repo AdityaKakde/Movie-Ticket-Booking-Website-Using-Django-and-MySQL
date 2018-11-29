@@ -10,13 +10,13 @@ urlpatterns = [
     re_path(r'managerRegister/$', views.managerRegister_view),
     re_path(r'managerLogin/$', views.managerLogin_view),
     re_path(r'createEvent/$', views.create_event_view),
-    re_path(r'eventScreen$', views.eventScreen,name='eventScreen'),
+    re_path(r'eventScreen/$', views.eventScreen,name='eventScreen'),
     re_path(r'createAccount/$', views.createAccount),
     #re_path(r'login/$', views.login),
     re_path(r'paymentLobby/$', views.paymentLobby, name='paymentLobby'),
     re_path(r'managerLogin/$', views.managerLogin),
     re_path(r'signup/$', views.signup_view),
-    re_path(r'login/$', views.login_view),
+    re_path(r'login/$', views.login_view, name = "login_view"),
     re_path(r'logout/$', views.logout_view)
 
     # re_path(r'signupform/$', views.signupform),
