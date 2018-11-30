@@ -1,12 +1,15 @@
 from django.shortcuts import render,redirect
+from django.template import RequestContext
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth import (authenticate,get_user_model,logout)
 from django.contrib.auth import login as log
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
+import datetime
 from .models import *
 from .forms import *
 from.backends import *
+from django.db import connection
 # from django.contrib.auth.models import User
 
 User = get_user_model()
@@ -19,8 +22,7 @@ def createEvent(request):
 @login_required
 def eventScreen(request):
     event = Event.objects.all()
-    for e in event:
-        print(e.event_name)
+    print(request.user.cus_id)
     count=1
     return render(request,'myapp/eventScreen.html',{'event':event},{'count':count})
 
@@ -41,40 +43,17 @@ def managerLogin(request):
     return render(request,'myapp/managerLogin.html')
 @login_required
 def paymentLobby(request):
+    event_id = request.GET.get('event_id','')
+    print (event_id)
+    cus_id = request.user.cus_id
+    print (request.user.cus_id)
+    now = datetime.date.today()
+    print (now)
+    with connection.cursor() as cursor:
+        cursor.callproc('push_to_payment', [now,cus_id,event_id])
     return render(request,'myapp/paymentLobby.html')
 
-# def signup(request):
-#     print("Form is submitted")
-#     #cus_id = request.POST["username"]
-#     cus_contact = request.POST["cus_contact"]
-#     cus_name =request.POST["cus_name"]
-#     username =request.POST["username"]
-#     password =request.POST["password"]
-#     customer= Customer(cus_name=cus_name,cus_contact=cus_contact,username=username,password=password)
-#     customer.save()
-#     print("Helllloooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo")
-#     return render(request,'myapp/createAccount.html')
-#
-# def signup_view(request):
-#     # form is working but errors are not seen.
-#     if request.method =='POST':
-#         form = signupform(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             # login(request,username)
-#         form = signupform()
-#         context = {
-#             'form':form
-#         }
-#
-#         return render (request,"myapp/createAccount.html",context)
-#
-#     else:
-#         form = signupform()
-#         context = {
-#                 'form':form
-#             }
-#         return render (request,"myapp/createAccount.html",context)
+
 def signup_view(request):
     if request.method =='POST':
         form = signupform(request.POST)
@@ -105,10 +84,11 @@ def login_view(request):
                 password= form.cleaned_data.get('password')
                 # user= authenticate(username=username,password=password)
                 user = Customer.objects.get(username=username,password=password)
-                print(user)
+                print(request.user)
                 if user:
-                    print(user)
+
                     log(request,user,backend="myapp.backends.CustomerBackend")
+
                 if next:
                     return redirect(next)
                 return redirect('myapp/eventScreen')
@@ -149,6 +129,7 @@ def managerRegister_view(request):
         user.save()
         new_user = authenticate(username=user.username, password=password)
         log(request,new_user)
+
         if next:
             return redirect(next)
         return redirect('/')

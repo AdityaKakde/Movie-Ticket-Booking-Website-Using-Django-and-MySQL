@@ -1,5 +1,6 @@
 from django.forms import ModelForm
 from django import forms
+from django.template import RequestContext
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 import datetime
@@ -87,18 +88,19 @@ class UserLoginForm(forms.Form):
             return super(UserLoginForm, self).clean()
 
 class ManagerRegistrationForm(ModelForm):
-        username =  forms.CharField(label='USERNAME')
-        email = forms.EmailField(label='EMAIL')
         email2 = forms.EmailField(label='CONFIRM EMAIL')
-        password =  forms.CharField(widget=forms.PasswordInput,label='PASSWORD')
+
+
 
         class Meta:
             model = User
             fields = {
                 'username',
-                'password',
-                'email2',
                 'email',
+
+                'password',
+
+
 
                 }
 

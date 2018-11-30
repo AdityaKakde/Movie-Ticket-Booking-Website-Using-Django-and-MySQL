@@ -75,13 +75,16 @@
     <div class="eventbox">
         <img src="avatar.png" class="avatar">
         <h2 style="color:#dd0a37">CURRENTLY SHOWING</h2>
-        <form action="paymentLobby.html">
+        <form action="paymentLobby">
 
         <!-- { %csrf_token% } -->
         {% for events in event %}
 
         <p> </p>
-        <input type="submit" name="{{events.event_name}}" value="{{events.event_name}}" class="button">
+        <label for="name">{{events.event_name}}</label>
+
+        <input type="submit" name="event_id" id="name" value="{{events.event_id}}" class="button">
+
 
         {% endfor %}
             <!-- <p>MOVIE 1</p>
