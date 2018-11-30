@@ -1,11 +1,12 @@
 from django.forms import ModelForm
 from django import forms
+from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
+import datetime
 from django.contrib.auth import (
     authenticate,
     get_user_model,
     )
-# from django.contrib.auth.models import User
 from .models import *
 from django.contrib.auth import login as log
 
@@ -26,10 +27,10 @@ class signupform(ModelForm):
         }
         widgets = {
             'password2':forms.PasswordInput(),
-            'cus_name':forms.TextInput(attrs={'placeholder':"John Doe"}),
-            'password':forms.PasswordInput(),
-            'cus_contact': forms.EmailInput(attrs={'placeholder':'john@gmail.com'}),
-            'username':forms.TextInput(attrs={'placeholder':"john"})
+            'cus_name':forms.TextInput(attrs={'placeholder':"John Doe",'required':True}),
+            'password':forms.PasswordInput(attrs={'required':True}),
+            'cus_contact': forms.EmailInput(attrs={'placeholder':'john@gmail.com','required':True}),
+            'username':forms.TextInput(attrs={'placeholder':"john",'required':True})
 
         }
 
@@ -42,7 +43,7 @@ class signupform(ModelForm):
             if user_qs.exists():
                 raise forms.ValidationError("User already exists")
             return username
-            # return redirect(signupform)
+            #return redirect(signupform)
 
     def clean_cus_contact(self):
         print(self.cleaned_data)
@@ -122,30 +123,13 @@ class loginform(forms.Form):
         def clean(self):
             username= self.cleaned_data.get('username')
             password= self.cleaned_data.get('password')
-            userz=Customer.objects.all()
-            print(userz)
-            print('f1')
-            user= authenticate(username=username,password=password)
-            print('f2')
-            print(user)
-            if username and password:
-                if not user:
-                     print('Form Not user')
-                     raise forms.ValidationError("User nonexistent")
-                if not user.check_password(password):
-                     print('Form pw incorrect')
-                     raise forms.ValidationError("Incorrect password")
+
+            try:
+                user = Customer.objects.get(username=username,password=password)
+            except Customer.DoesNotExist:
+                raise forms.ValidationError("Invalid Credentials")
             return super(loginform,self).clean()
-            # user_qs= Customer.objects.filter(username=username)
-            # print(user_qs)
-            # print('username exists')
-            # if user_qs.exists():
-            #     pass_qs= user_qs.password
-            #     print(pass_qs)
-            #     print('password exists')
-            #     if password!=pass_qs:
-            #         print('password exists')
-            #         raise forms.ValidationError("Wrong username or password")
+
 
 class eventform(ModelForm):
 
@@ -158,16 +142,27 @@ class eventform(ModelForm):
             'date': ('DATE'),
         }
         widgets = {
-            'event_time':forms.TimeInput(attrs={'placeholder':""}),
-            'event_name':forms.TextInput(attrs={'placeholder':""}),
-
+            'event_time':forms.TimeInput(attrs={'required':True}),
+            'event_name':forms.TextInput(attrs={'required':True}),
+            'date':forms.DateInput(attrs={'required':True})
         }
 
-        def clean():
+        def clean(self):
             event_name = form.cleaned_data.get(event_name)
             event_time = form.cleaned_data.get(event_time)
             date = form.cleaned_data.get(date)
 
             name_qs=Event.objects.filter(event_name=event_name)
+            print(name_qs)
+            print("name_qs")
             if name_qs.exists():
                 raise forms.ValidationError('Enter valid name')
+
+
+
+
+        def clean_date(self):
+            date = form.cleaned_data['date']
+            if date < datetime.date.today():
+                raise forms.ValidationError("The date cannot be in the past!")
+            return date

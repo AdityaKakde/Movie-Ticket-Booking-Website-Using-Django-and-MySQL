@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from .models import *
 from .forms import *
+from.backends import *
 # from django.contrib.auth.models import User
 
 User = get_user_model()
@@ -38,7 +39,7 @@ def login(request):
 
 def managerLogin(request):
     return render(request,'myapp/managerLogin.html')
-
+@login_required
 def paymentLobby(request):
     return render(request,'myapp/paymentLobby.html')
 
@@ -94,6 +95,7 @@ def signup_view(request):
             }
     return render (request,"myapp/createAccount.html",context)
 def login_view(request):
+        next = request.GET.get('next')
         if request.method =='POST':
             print('view 1')
             form = loginform(request.POST or None)
@@ -101,12 +103,15 @@ def login_view(request):
                 print('view 2')
                 username= form.cleaned_data.get('username')
                 password= form.cleaned_data.get('password')
-                user= authenticate(username=username,password=password)
+                # user= authenticate(username=username,password=password)
+                user = Customer.objects.get(username=username,password=password)
                 print(user)
                 if user:
                     print(user)
-                    log(request,user)
-                    # print(request.user.is_authenticated())
+                    log(request,user,backend="myapp.backends.CustomerBackend")
+                if next:
+                    return redirect(next)
+                return redirect('myapp/eventScreen')
 
             context = {
                     'form':form
@@ -128,7 +133,7 @@ def managerLogin_view(request):
         log(request,user)
         if next:
             return redirect(next)
-        return redirect('/')
+        return redirect('myapp/createEvent')
     context = {
         'form':form
     }
@@ -156,6 +161,7 @@ def logout_view(request):
     logout(request)
     return redirect ('/')
 
+@login_required
 def create_event_view(request):
     if request.method =='POST':
         form = eventform(request.POST)
@@ -165,7 +171,7 @@ def create_event_view(request):
         context = {
             'form':form
         }
-        print ("Hello")
+        print ("Event form execution done")
         return render (request,"myapp/createEvent.html",context)
 
     else:
