@@ -1,0 +1,5 @@
+delimiter //
+create procedure push_to_payment (in dates date, eventid int, cusid int)
+begin
+insert into payment (pay_amt,date,event_id,cus_id) values (500,dates,eventid,cusid);
+end //
