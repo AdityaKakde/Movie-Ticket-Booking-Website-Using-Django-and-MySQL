@@ -1,4 +1,5 @@
 {%load staticfiles%}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -6,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-    <title>ADMIN LOGIN</title>
+    <title>Title goes here</title>
 
     <!-- Google font -->
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,700,900" rel="stylesheet">
@@ -43,8 +44,8 @@
                 <!-- Logo -->
                 <div class="navbar-brand">
                     <a class="logo" href="index.html">
-                        <img class="logo-img" src="{% static 'myapp/img/logo.png'%}" alt="logo">
-                        <img class="logo-alt-img" src="{% static 'myapp/img/logo-alt.png'%}" alt="logo">
+                        <img class="logo-img" src="./img/logo.png" alt="logo">
+                        <img class="logo-alt-img" src="./img/logo-alt.png" alt="logo">
                     </a>
                 </div>
                 <!-- /Logo -->
@@ -70,17 +71,21 @@
     </header>
     <!-- /Header -->
 
-    <!-- /ADMIN LOGIN -->
+    <!-- /LOGIN -->
     <div class="createaccount">
         <img src="avatar.png" class="avatar">
-        <h2 style="color:#dd0a37">MANAGER SIGNUP</h2>
-      <form class="" method="post">
+        <h2 style="color:#dd0a37">LOGIN</h2>
+      <form  method="post">
+          <!-- eventScreen.html      -->
+              {% csrf_token %}
+              {{ form }}
+            <!-- <p>USERNAME</p>
+            <input type="text" name="" placeholder="Username" required>
+            <p>PASSWORD</p>
+            <input type="password" name="" placeholder="password"> -->
+            <input type="submit" name="" value="Login" class="button">
 
-      </form>
-            {% csrf_token %}
-            {{ form }}
-            <input type="submit" name="" value="SUBMIT" class="button">
-
+            <!-- <a href=sample>createaccount</a><br> -->
 
         </form>
 
@@ -96,15 +101,6 @@
             </div>
         </div>
     </div>
-
-
-
-
-
-
-
-
-
 
 
 

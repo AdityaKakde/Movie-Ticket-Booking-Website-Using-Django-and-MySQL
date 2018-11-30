@@ -19,7 +19,7 @@ class signupform(ModelForm):
     class Meta:
         model = Customer
         fields = ['cus_name','cus_contact','username','password']
-        # initial_fields = ['John Doe']
+
         labels ={
             'cus_name': ('NAME'),
             'cus_contact': ('EMAIL'),
@@ -88,34 +88,54 @@ class UserLoginForm(forms.Form):
             return super(UserLoginForm, self).clean()
 
 class ManagerRegistrationForm(ModelForm):
-        email2 = forms.EmailField(label='CONFIRM EMAIL')
+
+
+        email = forms.EmailField(label='Email')
+        email2 = forms.EmailField(label='Confirm Email')
+        password = forms.CharField(widget=forms.PasswordInput)
+        username=forms.CharField()
 
 
 
         class Meta:
             model = User
             fields = {
-                'username',
                 'email',
-
+                'email2',
                 'password',
+                'username',
+
+
+
 
 
 
                 }
-
         def clean_email2(self):
             email= self.cleaned_data.get('email')
             email2= self.cleaned_data.get('email2')
             password= self.cleaned_data.get('password')
+            username= self.cleaned_data.get('username')
             if email!=email2:
                 raise forms.ValidationError("Emails must match")
             email_qs = User.objects.filter(username=username)
             if email_qs.exists():
                 raise forms.ValidationError("Email already registred")
-
-
-            return super(ManagerRegistrationForm,self).clean(*args,**kwargs)
+            return super(ManagerRegistrationForm,self).clean()
+                # labels ={
+                #     'email': ('EMAIL'),
+                #     'email2': ('CONFIRM EMAIL'),
+                #     'username': ('USERNAME'),
+                #     'password': ('PASSWORD'),
+                # }
+                # widgets = {
+                #     'password2':forms.PasswordInput(),
+                #     'email2':forms.TextInput(attrs={'placeholder':"abc@email.com",'required':True}),
+                #     'password':forms.PasswordInput(attrs={'required':True}),
+                #     'email':forms.TextInput(attrs={'placeholder':"abc@email.com",'required':True}),
+                #     'username':forms.TextInput(attrs={'placeholder':"john",'required':True})
+                #
+                # }
 
 class loginform(forms.Form):
         username = forms.CharField(label='USERNAME')

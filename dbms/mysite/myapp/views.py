@@ -10,10 +10,10 @@ from .models import *
 from .forms import *
 from.backends import *
 from django.db import connection
-# from django.contrib.auth.models import User
+
 
 User = get_user_model()
-# Create your views here.
+
 def index(request):
     return render(request,'myapp/index.html')
 
@@ -23,8 +23,7 @@ def createEvent(request):
 def eventScreen(request):
     event = Event.objects.all()
     print(request.user.cus_id)
-    count=1
-    return render(request,'myapp/eventScreen.html',{'event':event},{'count':count})
+    return render(request,'myapp/eventScreen.html',{'event':event})
 
 def adminLogin(request):
     return render(request,'myapp/adminLogin.html')
@@ -41,6 +40,7 @@ def login(request):
 
 def managerLogin(request):
     return render(request,'myapp/managerLogin.html')
+
 @login_required
 def paymentLobby(request):
     event_id = request.GET.get('event_id','')
@@ -50,9 +50,8 @@ def paymentLobby(request):
     now = datetime.date.today()
     print (now)
     with connection.cursor() as cursor:
-        cursor.callproc('push_to_payment', [now,cus_id,event_id])
+        cursor.callproc('push_to_payment', [now,event_id,cus_id])
     return render(request,'myapp/paymentLobby.html')
-
 
 def signup_view(request):
     if request.method =='POST':
@@ -73,6 +72,7 @@ def signup_view(request):
                 'form':form
             }
     return render (request,"myapp/createAccount.html",context)
+
 def login_view(request):
         next = request.GET.get('next')
         if request.method =='POST':
@@ -103,6 +103,7 @@ def login_view(request):
                     'form':form
                 }
             return render (request,"myapp/login.html",context)
+
 def managerLogin_view(request):
     next = request.GET.get('next')
     form = UserLoginForm(request.POST or None)
@@ -132,7 +133,7 @@ def managerRegister_view(request):
 
         if next:
             return redirect(next)
-        return redirect('/')
+        return redirect('myapp/createEvent')
     context = {
         'form':form
     }
@@ -161,22 +162,3 @@ def create_event_view(request):
                 'form':form
             }
         return render (request,"myapp/createEvent.html",context)
-
-# def event_view(request):
-#     if request.method =='POST':
-#         form = eventform(request.POST)
-#         if form.is_valid():
-#             form.save()
-#
-#         context = {
-#             'form':form
-#         }
-#         print ("Hello")
-#         return render (request,"myapp/createEvent.html",context)
-#
-#     else:
-#         form = eventform(request.POST)
-#         context = {
-#                 'form':form
-#             }
-#         return render (request,"myapp/createEvent.html",context)

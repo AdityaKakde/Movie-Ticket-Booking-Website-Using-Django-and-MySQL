@@ -105,6 +105,10 @@ class Customer(models.Model):
 
     def is_authenticated(self):
         return True
+    def is_active(self):
+        return True
+    def is_staff(self):
+        return True
     def __str__(self):
         return self.cus_name
     class Meta:
