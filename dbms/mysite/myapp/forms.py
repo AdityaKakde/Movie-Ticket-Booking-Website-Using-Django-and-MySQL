@@ -94,9 +94,7 @@ class ManagerRegistrationForm(ModelForm):
         email2 = forms.EmailField(label='Confirm Email')
         password = forms.CharField(widget=forms.PasswordInput)
         username=forms.CharField()
-
-
-
+        
         class Meta:
             model = User
             fields = {
