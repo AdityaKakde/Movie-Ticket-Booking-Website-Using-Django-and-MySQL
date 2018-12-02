@@ -90,18 +90,24 @@ class UserLoginForm(forms.Form):
 class ManagerRegistrationForm(ModelForm):
 
 
+        username=forms.CharField()
+        password = forms.CharField(widget=forms.PasswordInput)
         email = forms.EmailField(label='Email')
         email2 = forms.EmailField(label='Confirm Email')
-        password = forms.CharField(widget=forms.PasswordInput)
-        username=forms.CharField()
-        
+
+
+
+
+
         class Meta:
             model = User
             fields = {
+                'username',
+                'password',
                 'email',
                 'email2',
-                'password',
-                'username',
+
+
 
 
 
@@ -110,10 +116,12 @@ class ManagerRegistrationForm(ModelForm):
 
                 }
         def clean_email2(self):
+            username= self.cleaned_data.get('username')
+            password= self.cleaned_data.get('password')
             email= self.cleaned_data.get('email')
             email2= self.cleaned_data.get('email2')
-            password= self.cleaned_data.get('password')
-            username= self.cleaned_data.get('username')
+
+
             if email!=email2:
                 raise forms.ValidationError("Emails must match")
             email_qs = User.objects.filter(username=username)

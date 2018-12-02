@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-    <title>CreateAccount</title>
+    <title>CREATE ACCOUNT</title>
 
     <!-- Google font -->
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,700,900" rel="stylesheet">
@@ -34,41 +34,42 @@
 
 <body>
 
-    <!-- Header -->
-    <header id="header">
-        <!-- container -->
-        <div class="container">
-            <!-- navbar header -->
-            <div class="navbar-header">
-                <!-- Logo -->
-                <div class="navbar-brand">
-                    <a class="logo" href="index.html">
-                        <img class="logo-img" src="{% static 'myapp/img/logo.png'%}" alt="logo">
-                        <img class="logo-alt-img" src="{% static 'myapp/img/logo-alt.png'%}" alt="logo">
-                    </a>
-                </div>
-                <!-- /Logo -->
+  <!-- Header -->
+  <header id="header">
+      <!-- container -->
+      <div class="container">
+          <!-- navbar header -->
+          <div class="navbar-header">
+              <!-- Logo -->
+              <div class="navbar-brand">
+                  <a class="logo" href="/">
+                      <img class="logo-img" src="{% static 'myapp/img/logo.png'%}" alt="logo">
+                      <img class="logo-alt-img" src="{% static 'myapp/img/logo-alt.png'%}" alt="logo">
+                  </a>
+              </div>
+              <!-- /Logo -->
 
-                <!-- Mobile toggle -->
-                <button class="navbar-toggle">
-                        <i class="fa fa-bars"></i>
-                    </button>
-                <!-- /Mobile toggle -->
-            </div>
-            <!-- /navbar header -->
+              <!-- Mobile toggle -->
+              <button class="navbar-toggle">
+                      <i class="fa fa-bars"></i>
+                  </button>
+              <!-- /Mobile toggle -->
+          </div>
+          <!-- /navbar header -->
 
-            <!-- Navigation -->
-            <nav id="nav">
-                <ul class="main-nav nav navbar-nav navbar-right">
-                    <li><a href="/">Home</a></li>
-                </ul>
-            </nav>
-            <!-- /Navigation -->
+          <!-- Navigation -->
+          <nav id="nav">
+              <ul class="main-nav nav navbar-nav navbar-right">
+                  <li><a href="logout/">HOME</a></li>
+              </ul>
+          </nav>
+          <!-- /Navigation -->
 
-        </div>
-        <!-- /container -->
-    </header>
-    <!-- /Header -->
+      </div>
+      <!-- /container -->
+  </header>
+  <!-- /Header -->
+
 
     <!-- /LOGIN -->
     <div class="createaccount">
@@ -77,7 +78,7 @@
     <form class="" action="" method="post">
         {% csrf_token %}
         {{ form }}
-        <input type="submit" name="eventScreen.html" value="SIGNUP" class="button">
+        <input type="submit" name="eventScreen.html" value="SUBMIT" class="button">
     </form>
         <!-- <p>NAME</p>
         <input type="text" name="cus_name" placeholder="John Doe" required>

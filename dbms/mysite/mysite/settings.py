@@ -80,9 +80,9 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'event',
+        'NAME': 'dbmsdb',
         'USER': 'root',
-        'PASSWORD': 'cherrypie',
+        'PASSWORD': 'kakde1610',
     }
 }
 
